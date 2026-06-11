@@ -31,24 +31,10 @@ export default function SignupPage() {
     "Transform my reality through language"
   ];
 
+  // This is the handleChange function - it IS defined here
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
-// After getting zodiac sign, also capture:
-const sign = getZodiacSign(formData.birthDate);
-if (sign) {
-  await supabase
-    .from("profiles")
-    .update({
-      zodiac_element: sign.element,
-      zodiac_quality: sign.quality,
-      zodiac_ruling: sign.ruling,
-      zodiac_strengths: sign.strengths,
-      zodiac_weaknesses: sign.weaknesses,
-    })
-    .eq("id", authData.user.id);
-}
 
   const handleSignup = async () => {
     if (!formData.email || !formData.password) {
