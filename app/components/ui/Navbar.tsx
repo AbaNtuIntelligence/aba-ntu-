@@ -31,7 +31,7 @@ export default function Navbar({ onMenuClick, onLogout, user, profile }: NavbarP
             <p className="text-sm font-medium text-gray-900">
               {profile?.full_name?.split(' ')[0] || user?.email?.split('@')[0]}
             </p>
-            <p className="text-xs text-gray-600">{profile?.archetype || "The Seeker"}</p>
+            <p className="text-xs text-white">{profile?.archetype || "The Seeker"}</p>
           </div>
 
           {profile?.avatar_url ? (

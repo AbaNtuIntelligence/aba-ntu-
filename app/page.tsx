@@ -42,45 +42,57 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-purple-50 via-white to-indigo-50">
         <Link href="/" className="flex items-center gap-2">
-  <img
-  src="/images/logo.png"
-  alt="AbaNtu Intelligence"
-  className="h-8 md:h-12 w-auto"
-/>
+  
   {/* Optional: keep text beside logo */}
   <span className="font-bold text-xl bg-gradient-to-r from-gray-900 to-purple-800 bg-clip-text text-transparent">
     AbaNtu
   </span>
 </Link>
         <div className="absolute inset-0 bg-grid-pattern opacity-5" />
-        <div className="relative max-w-7xl mx-auto px-6 py-24 md:py-32 text-center">
-          <div className="inline-flex items-center gap-2 bg-white/70 backdrop-blur-sm rounded-full px-4 py-2 mb-6 border border-purple-200 shadow-sm">
-            <Sparkles className="w-4 h-4 text-purple-600" />
-            <span className="text-sm font-medium text-purple-800">AbaNtu Intelligence™</span>
-          </div>
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight bg-gradient-to-r from-gray-900 via-purple-800 to-indigo-800 bg-clip-text text-transparent mb-6">
-            Know Thyself.<br />
-            Master Thyself.<br />
-            Align Thyself.<br />
-            Build Thyself.
-          </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed">
-            The AbaNtu Method integrates Psychology, Astrology, and Etymology to help you discover your nature, master your behavior, align your life, and contribute your gifts.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/signup" className="group px-8 py-4 bg-gradient-to-r from-purple-700 to-indigo-700 text-white rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] flex items-center justify-center gap-2">
-              Start Your Journey
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
-            <button
-              onClick={() => setShowMethodModal(true)}
-              className="px-8 py-4 bg-white border-2 border-purple-200 text-purple-800 rounded-2xl font-semibold hover:border-purple-400 transition-all flex items-center justify-center gap-2"
-            >
-              <MessageSquare className="w-5 h-5" />
-              Learn the Method
-            </button>
-          </div>
-        </div>
+<div className="relative max-w-7xl mx-auto px-6 py-24 md:py-32 text-center">
+  {/* Centered Logo */}
+  <div className="flex justify-center mb-6">
+    <img
+      src="/images/logo.png"  // or .png
+      alt="AbaNtu Intelligence"
+      className="h-15 md:h-20 w-auto"
+    />
+  </div>
+
+  {/* Badge */}
+  <div className="inline-flex items-center gap-2 bg-white/70 backdrop-blur-sm rounded-full px-4 py-2 mb-6 border border-purple-200 shadow-sm">
+    <Sparkles className="w-4 h-4 text-purple-600" />
+    <span className="text-sm font-medium text-purple-800">AbaNtu Intelligence™</span>
+  </div>
+
+  {/* Headline */}
+  <h1 className="text-5xl md:text-7xl font-bold tracking-tight bg-gradient-to-r from-gray-900 via-purple-800 to-indigo-800 bg-clip-text text-transparent mb-6">
+    Know Thyself.<br />
+    Master Thyself.<br />
+    Align Thyself.<br />
+    Build Thyself.
+  </h1>
+
+  {/* Description */}
+  <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed">
+    The AbaNtu Method integrates Psychology, Astrology, and Etymology to help you discover your nature, master your behavior, align your life, and contribute your gifts.
+  </p>
+
+  {/* Buttons */}
+  <div className="flex flex-col sm:flex-row gap-4 justify-center">
+    <Link href="/signup" className="group px-8 py-4 bg-gradient-to-r from-purple-700 to-indigo-700 text-white rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] flex items-center justify-center gap-2">
+      Start Your Journey
+      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+    </Link>
+    <button
+      onClick={() => setShowMethodModal(true)}
+      className="px-8 py-4 bg-white border-2 border-purple-200 text-purple-800 rounded-2xl font-semibold hover:border-purple-400 transition-all flex items-center justify-center gap-2"
+    >
+      <MessageSquare className="w-5 h-5" />
+      Learn the Method
+    </button>
+  </div>
+</div>
       </section>
 
       {/* ... Rest of the sections (Three Lenses, Four Paths, etc.) remain the same as previously ... */}
