@@ -7,13 +7,15 @@ import Link from "next/link";
 import {
   Brain, Sparkles, BookOpen, Target, Zap, Gem,
   ArrowRight, Award, Compass, Layers, Briefcase,
-  Eye, Heart, TrendingUp, Feather, Users, Lightbulb, Crown
+  Eye, Heart, TrendingUp, Feather, Users, Lightbulb, Crown,
+  X, MessageSquare
 } from "lucide-react";
 
 export default function HomePage() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<any>(null);
+  const [showMethodModal, setShowMethodModal] = useState(false);
 
   useEffect(() => {
     const checkUser = async () => {
@@ -33,7 +35,7 @@ export default function HomePage() {
     );
   }
 
-  if (user) return null; // will redirect
+  if (user) return null;
 
   return (
     <div className="min-h-screen bg-white">
@@ -59,93 +61,319 @@ export default function HomePage() {
               Start Your Journey
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
-            <Link href="/about" className="px-8 py-4 bg-white border-2 border-purple-200 text-purple-800 rounded-2xl font-semibold hover:border-purple-400 transition-all">
+            <button
+              onClick={() => setShowMethodModal(true)}
+              className="px-8 py-4 bg-white border-2 border-purple-200 text-purple-800 rounded-2xl font-semibold hover:border-purple-400 transition-all flex items-center justify-center gap-2"
+            >
+              <MessageSquare className="w-5 h-5" />
               Learn the Method
-            </Link>
+            </button>
           </div>
         </div>
       </section>
+
+      {/* ... Rest of the sections (Three Lenses, Four Paths, etc.) remain the same as previously ... */}
+      {/* (I will include them for completeness but focus on modal) */}
+
+      {/* Method Modal */}
+      {showMethodModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-all">
+          <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto shadow-2xl border border-purple-100">
+            <div className="sticky top-0 bg-white border-b border-purple-100 px-6 py-4 flex justify-between items-center">
+              <h2 className="text-2xl font-bold text-purple-900">The AbaNtu Method™</h2>
+              <button
+                onClick={() => setShowMethodModal(false)}
+                className="p-2 rounded-full hover:bg-purple-50 transition"
+              >
+                <X className="w-6 h-6 text-gray-500" />
+              </button>
+            </div>
+            <div className="p-6 space-y-4 text-gray-700 leading-relaxed">
+              <p>
+                The AbaNtu Method™ is a structured self-mastery and human development framework that combines behavioral science, systems thinking, and digital intelligence to help individuals understand who they are, where they are, and what they need to do next.
+              </p>
+              <p>
+                Through our proprietary <strong className="text-purple-700">Self-Mastery Index™</strong>, participants assess key dimensions of personal effectiveness, leadership capacity, emotional resilience, discipline, purpose, and growth potential.
+              </p>
+              <p>
+                The assessment generates a personalized archetype and development profile, transforming self-awareness into actionable insight.
+              </p>
+              <p>
+                Rather than offering generic advice, the AbaNtu Method™ provides a data-driven roadmap for personal, professional, and community transformation—empowering individuals, teams, schools, organizations, and communities to move from potential to performance with clarity, accountability, and measurable progress.
+              </p>
+              <div className="mt-6 pt-4 border-t border-purple-100 text-center">
+                <Link
+                  href="/signup"
+                  className="inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl font-medium hover:shadow-md transition"
+                >
+                  Begin Your Journey
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* The Three Lenses */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">The Three Lenses of AbaNtu</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">Every challenge is examined through three integrative lenses.</p>
+      {/* The Three Lenses - Expanded */}
+<section className="py-24 bg-white">
+  <div className="max-w-7xl mx-auto px-6">
+    <div className="text-center mb-16">
+      <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">The Three Lenses™</h2>
+      <p className="text-xl text-gray-600 max-w-2xl mx-auto">Every challenge within the AbaNtu Method is examined through three integrative lenses.</p>
+    </div>
+    <div className="grid md:grid-cols-3 gap-8">
+      {/* Lens 1: Psychology */}
+      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 hover:shadow-2xl transition-all overflow-hidden">
+        <div className="bg-gradient-to-r from-purple-500 to-indigo-600 p-6 text-white">
+          <Brain className="w-10 h-10 mb-3" />
+          <h3 className="text-2xl font-bold">Psychology Lens</h3>
+          <p className="text-purple-100 text-lg mt-1">What behavior is occurring?</p>
+        </div>
+        <div className="p-6 space-y-4">
+          <div>
+            <h4 className="font-semibold text-gray-800 mb-2">Examines:</h4>
+            <ul className="space-y-2 text-gray-600">
+              <li className="flex items-start gap-2">
+                <span className="text-purple-500">•</span> Thought patterns
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-purple-500">•</span> Habits
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-purple-500">•</span> Emotions
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-purple-500">•</span> Conditioning
+              </li>
+            </ul>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: Brain,
-                title: "Psychology",
-                description: "What behavior is occurring?",
-                details: "Thought patterns, habits, emotions, conditioning.",
-                outcome: "Behavioral Understanding",
-                color: "purple"
-              },
-              {
-                icon: Sparkles,
-                title: "Astrology",
-                description: "What nature is being expressed?",
-                details: "Archetypes, tendencies, potentials, cycles.",
-                outcome: "Self-Knowledge & Alignment",
-                color: "indigo"
-              },
-              {
-                icon: BookOpen,
-                title: "Etymology",
-                description: "What language is constructing this reality?",
-                details: "Meaning, definitions, vocabulary, internal narratives.",
-                outcome: "Conscious Communication",
-                color: "amber"
-              }
-            ].map((lens) => (
-              <div key={lens.title} className="group relative bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-2xl transition-all hover:-translate-y-1">
-                <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${
-                  lens.color === 'purple' ? 'from-purple-500 to-indigo-600' :
-                  lens.color === 'indigo' ? 'from-indigo-500 to-purple-600' :
-                  'from-amber-400 to-orange-500'
-                } flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
-                  <lens.icon className="w-7 h-7 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">{lens.title}</h3>
-                <p className="text-gray-700 font-medium">{lens.description}</p>
-                <p className="text-gray-500 text-sm mt-2">{lens.details}</p>
-                <div className="mt-4 pt-4 border-t border-gray-100">
-                  <span className="text-xs font-semibold text-purple-600 uppercase tracking-wide">{lens.outcome}</span>
-                </div>
-              </div>
-            ))}
+          <div className="pt-4 border-t border-gray-100">
+            <h4 className="font-semibold text-purple-700 mb-1">Core Function:</h4>
+            <p className="text-gray-700">Behavioral Understanding</p>
+            <p className="text-sm text-gray-500 mt-2">Uncover the patterns that drive your actions and reactions.</p>
           </div>
         </div>
-      </section>
+      </div>
+
+      {/* Lens 2: Astrology */}
+      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 hover:shadow-2xl transition-all overflow-hidden">
+        <div className="bg-gradient-to-r from-indigo-500 to-purple-600 p-6 text-white">
+          <Sparkles className="w-10 h-10 mb-3" />
+          <h3 className="text-2xl font-bold">Astrology Lens</h3>
+          <p className="text-purple-100 text-lg mt-1">What nature is being expressed?</p>
+        </div>
+        <div className="p-6 space-y-4">
+          <div>
+            <h4 className="font-semibold text-gray-800 mb-2">Examines:</h4>
+            <ul className="space-y-2 text-gray-600">
+              <li className="flex items-start gap-2">
+                <span className="text-indigo-500">•</span> Archetypes
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-indigo-500">•</span> Tendencies
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-indigo-500">•</span> Potentials
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-indigo-500">•</span> Cycles
+              </li>
+            </ul>
+          </div>
+          <div className="pt-4 border-t border-gray-100">
+            <h4 className="font-semibold text-purple-700 mb-1">Core Function:</h4>
+            <p className="text-gray-700">Self-Knowledge and Alignment</p>
+            <p className="text-sm text-gray-500 mt-2">Understand your innate nature and align with your cosmic blueprint.</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Lens 3: Etymology */}
+      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 hover:shadow-2xl transition-all overflow-hidden">
+        <div className="bg-gradient-to-r from-amber-500 to-orange-500 p-6 text-white">
+          <BookOpen className="w-10 h-10 mb-3" />
+          <h3 className="text-2xl font-bold">Etymology Lens</h3>
+          <p className="text-amber-100 text-lg mt-1">What language is constructing this reality?</p>
+        </div>
+        <div className="p-6 space-y-4">
+          <div>
+            <h4 className="font-semibold text-gray-800 mb-2">Examines:</h4>
+            <ul className="space-y-2 text-gray-600">
+              <li className="flex items-start gap-2">
+                <span className="text-amber-500">•</span> Meaning
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-amber-500">•</span> Definitions
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-amber-500">•</span> Vocabulary
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-amber-500">•</span> Internal narratives
+              </li>
+            </ul>
+          </div>
+          <div className="pt-4 border-t border-gray-100">
+            <h4 className="font-semibold text-purple-700 mb-1">Core Function:</h4>
+            <p className="text-gray-700">Conscious Communication</p>
+            <p className="text-sm text-gray-500 mt-2">Master the words that shape your internal and external reality.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* The Four Paths */}
-      <section className="py-24 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">The Four Paths of Development™</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">A progressive journey from self-knowledge to contribution.</p>
+      {/* The Four Paths of Development - Expanded */}
+<section className="py-24 bg-gray-50">
+  <div className="max-w-7xl mx-auto px-6">
+    <div className="text-center mb-16">
+      <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">The Four Paths of Development™</h2>
+      <p className="text-xl text-gray-600 max-w-2xl mx-auto">The complete developmental journey consists of four progressive stages.</p>
+    </div>
+    <div className="grid md:grid-cols-2 gap-8">
+      {/* Path 1: Know Thyself */}
+      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 hover:shadow-2xl transition-all overflow-hidden">
+        <div className="bg-gradient-to-r from-blue-500 to-cyan-600 p-6 text-white">
+          <Compass className="w-10 h-10 mb-3" />
+          <h3 className="text-2xl font-bold">Path 1: Know Thyself</h3>
+          <p className="text-blue-100 text-lg mt-1">“Who am I?”</p>
+        </div>
+        <div className="p-6 space-y-4">
+          <div>
+            <h4 className="font-semibold text-gray-800 mb-2">Focus:</h4>
+            <ul className="grid grid-cols-2 gap-1 text-gray-600 text-sm">
+              <li>• Identity</li>
+              <li>• Personality</li>
+              <li>• Temperament</li>
+              <li>• Natural inclinations</li>
+              <li>• Strengths</li>
+              <li>• Weaknesses</li>
+            </ul>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { icon: Compass, title: "Know Thyself", desc: "Identity, personality, natural inclinations, strengths & weaknesses.", outcome: "Self-Knowledge", color: "blue" },
-              { icon: Target, title: "Master Thyself", desc: "Habits, discipline, emotional regulation, decision-making, focus.", outcome: "Self-Mastery", color: "purple" },
-              { icon: Layers, title: "Align Thyself", desc: "Purpose, relationships, work, environment, timing.", outcome: "Alignment", color: "indigo" },
-              { icon: Briefcase, title: "Build Thyself", desc: "Leadership, service, enterprise, legacy, community.", outcome: "Contribution", color: "amber" }
-            ].map((path) => (
-              <div key={path.title} className="bg-white rounded-xl shadow-md overflow-hidden border-l-8 border-purple-500 hover:shadow-xl transition-all">
-                <div className="p-6">
-                  <path.icon className="w-10 h-10 text-gray-700 mb-4" />
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">{path.title}</h3>
-                  <p className="text-gray-600 text-sm">{path.desc}</p>
-                  <p className="text-xs font-medium text-purple-600 mt-4 uppercase tracking-wide">{path.outcome}</p>
-                </div>
-              </div>
-            ))}
+          <div>
+            <h4 className="font-semibold text-gray-800 mb-2">Tools:</h4>
+            <ul className="flex flex-wrap gap-2">
+              <li className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-sm">Psychology</li>
+              <li className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-sm">Astrology</li>
+              <li className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-sm">Reflection</li>
+            </ul>
+          </div>
+          <div className="pt-4 border-t border-gray-100">
+            <h4 className="font-semibold text-blue-700 mb-1">Outcome:</h4>
+            <p className="text-gray-800 font-medium">Self-Knowledge</p>
+            <p className="text-sm text-gray-500 mt-1">Build a foundation of authentic self-understanding.</p>
           </div>
         </div>
-      </section>
+      </div>
+
+      {/* Path 2: Master Thyself */}
+      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 hover:shadow-2xl transition-all overflow-hidden">
+        <div className="bg-gradient-to-r from-purple-500 to-indigo-600 p-6 text-white">
+          <Target className="w-10 h-10 mb-3" />
+          <h3 className="text-2xl font-bold">Path 2: Master Thyself</h3>
+          <p className="text-purple-100 text-lg mt-1">“Can I govern myself?”</p>
+        </div>
+        <div className="p-6 space-y-4">
+          <div>
+            <h4 className="font-semibold text-gray-800 mb-2">Focus:</h4>
+            <ul className="grid grid-cols-2 gap-1 text-gray-600 text-sm">
+              <li>• Habits</li>
+              <li>• Discipline</li>
+              <li>• Emotional regulation</li>
+              <li>• Decision-making</li>
+              <li>• Focus</li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-semibold text-gray-800 mb-2">Tools:</h4>
+            <ul className="flex flex-wrap gap-2">
+              <li className="bg-purple-50 text-purple-700 px-3 py-1 rounded-full text-sm">Behavioral Psychology</li>
+              <li className="bg-purple-50 text-purple-700 px-3 py-1 rounded-full text-sm">Cognitive Training</li>
+              <li className="bg-purple-50 text-purple-700 px-3 py-1 rounded-full text-sm">Journaling</li>
+            </ul>
+          </div>
+          <div className="pt-4 border-t border-gray-100">
+            <h4 className="font-semibold text-purple-700 mb-1">Outcome:</h4>
+            <p className="text-gray-800 font-medium">Self-Mastery</p>
+            <p className="text-sm text-gray-500 mt-1">Develop the discipline to act in alignment with your values.</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Path 3: Align Thyself */}
+      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 hover:shadow-2xl transition-all overflow-hidden">
+        <div className="bg-gradient-to-r from-indigo-500 to-purple-600 p-6 text-white">
+          <Layers className="w-10 h-10 mb-3" />
+          <h3 className="text-2xl font-bold">Path 3: Align Thyself</h3>
+          <p className="text-indigo-100 text-lg mt-1">“Am I living according to my nature?”</p>
+        </div>
+        <div className="p-6 space-y-4">
+          <div>
+            <h4 className="font-semibold text-gray-800 mb-2">Focus:</h4>
+            <ul className="grid grid-cols-2 gap-1 text-gray-600 text-sm">
+              <li>• Purpose</li>
+              <li>• Relationships</li>
+              <li>• Work</li>
+              <li>• Environment</li>
+              <li>• Timing</li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-semibold text-gray-800 mb-2">Tools:</h4>
+            <ul className="flex flex-wrap gap-2">
+              <li className="bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full text-sm">Astrology</li>
+              <li className="bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full text-sm">Strategic Reflection</li>
+              <li className="bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full text-sm">Personal Planning</li>
+            </ul>
+          </div>
+          <div className="pt-4 border-t border-gray-100">
+            <h4 className="font-semibold text-indigo-700 mb-1">Outcome:</h4>
+            <p className="text-gray-800 font-medium">Alignment</p>
+            <p className="text-sm text-gray-500 mt-1">Live in harmony with your true nature and cosmic timing.</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Path 4: Build Thyself */}
+      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 hover:shadow-2xl transition-all overflow-hidden">
+        <div className="bg-gradient-to-r from-amber-500 to-orange-500 p-6 text-white">
+          <Briefcase className="w-10 h-10 mb-3" />
+          <h3 className="text-2xl font-bold">Path 4: Build Thyself</h3>
+          <p className="text-amber-100 text-lg mt-1">“What contribution shall I make?”</p>
+        </div>
+        <div className="p-6 space-y-4">
+          <div>
+            <h4 className="font-semibold text-gray-800 mb-2">Focus:</h4>
+            <ul className="grid grid-cols-2 gap-1 text-gray-600 text-sm">
+              <li>• Leadership</li>
+              <li>• Service</li>
+              <li>• Enterprise</li>
+              <li>• Legacy</li>
+              <li>• Community</li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-semibold text-gray-800 mb-2">Tools:</h4>
+            <ul className="flex flex-wrap gap-2">
+              <li className="bg-amber-50 text-amber-700 px-3 py-1 rounded-full text-sm">Mentorship</li>
+              <li className="bg-amber-50 text-amber-700 px-3 py-1 rounded-full text-sm">Teaching</li>
+              <li className="bg-amber-50 text-amber-700 px-3 py-1 rounded-full text-sm">Leadership Practice</li>
+            </ul>
+          </div>
+          <div className="pt-4 border-t border-gray-100">
+            <h4 className="font-semibold text-amber-700 mb-1">Outcome:</h4>
+            <p className="text-gray-800 font-medium">Contribution</p>
+            <p className="text-sm text-gray-500 mt-1">Create lasting impact and serve the greater good.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* The AbaNtu Equation */}
       <section className="bg-gradient-to-r from-gray-900 to-purple-900 text-white py-20">
@@ -163,32 +391,93 @@ export default function HomePage() {
       </section>
 
       {/* The Seven Intelligences */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">The Seven Intelligences™</h2>
-            <p className="text-xl text-gray-600 mt-2">Beyond IQ – a holistic model of human potential.</p>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {[
-              { icon: Eye, name: "Self Intelligence", desc: "Understanding oneself" },
-              { icon: Heart, name: "Emotional Intelligence", desc: "Understanding emotions" },
-              { icon: TrendingUp, name: "Behavioral Intelligence", desc: "Understanding actions" },
-              { icon: Feather, name: "Linguistic Intelligence", desc: "Understanding language" },
-              { icon: Users, name: "Relational Intelligence", desc: "Understanding others" },
-              { icon: Compass, name: "Strategic Intelligence", desc: "Understanding direction" },
-              { icon: Lightbulb, name: "Spiritual Intelligence", desc: "Understanding purpose" },
-              { icon: Crown, name: "AbaNtu Integration", desc: "All dimensions working together" }
-            ].map((intel, i) => (
-              <div key={i} className="group p-6 bg-gray-50 rounded-xl hover:bg-purple-50 transition-all hover:shadow-md">
-                <intel.icon className="w-10 h-10 text-purple-700 mb-3 group-hover:scale-110 transition-transform" />
-                <h3 className="font-semibold text-gray-800">{intel.name}</h3>
-                <p className="text-xs text-gray-500 mt-1">{intel.desc}</p>
-              </div>
-            ))}
+     <section className="py-24 bg-white">
+  <div className="max-w-7xl mx-auto px-6">
+    <div className="text-center mb-16">
+      <h2 className="text-3xl md:text-4xl font-bold text-gray-900">The Seven Intelligences™</h2>
+      <p className="text-xl text-gray-600 mt-2 max-w-2xl mx-auto">
+        Beyond IQ – a holistic model of human potential. Each intelligence represents a unique dimension of growth.
+      </p>
+    </div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {[
+        {
+          icon: Eye,
+          name: "Self Intelligence",
+          shortDesc: "Know thyself",
+          description: "Awareness of your own patterns, values, and inner world.",
+          prompt: "What drives you?"
+        },
+        {
+          icon: Heart,
+          name: "Emotional Intelligence",
+          shortDesc: "Feel wisely",
+          description: "Recognize, understand, and manage emotions – yours and others'.",
+          prompt: "How do you respond under pressure?"
+        },
+        {
+          icon: TrendingUp,
+          name: "Behavioral Intelligence",
+          shortDesc: "Act intentionally",
+          description: "Align actions with goals; break unhelpful habits.",
+          prompt: "Do your habits serve your future self?"
+        },
+        {
+          icon: Feather,
+          name: "Linguistic Intelligence",
+          shortDesc: "Speak your reality",
+          description: "Master words to shape perception and communication.",
+          prompt: "What stories do you tell yourself?"
+        },
+        {
+          icon: Users,
+          name: "Relational Intelligence",
+          shortDesc: "Connect deeply",
+          description: "Build trust, resolve conflict, and collaborate effectively.",
+          prompt: "How do you show up for others?"
+        },
+        {
+          icon: Compass,
+          name: "Strategic Intelligence",
+          shortDesc: "Navigate complexity",
+          description: "See the big picture, plan, and adapt to change.",
+          prompt: "Where are you going?"
+        },
+        {
+          icon: Lightbulb,
+          name: "Spiritual Intelligence",
+          shortDesc: "Find meaning",
+          description: "Connect to purpose, values, and something greater.",
+          prompt: "Why does it matter?"
+        },
+        {
+          icon: Crown,
+          name: "AbaNtu Integration",
+          shortDesc: "Unify all seven",
+          description: "The synergy of every intelligence working together.",
+          prompt: "How do you integrate?"
+        }
+      ].map((intel, i) => (
+        <div
+          key={i}
+          className="group relative bg-white rounded-2xl p-6 shadow-md border border-gray-100 hover:shadow-xl transition-all hover:-translate-y-1 hover:border-purple-200"
+        >
+          <div className="flex items-start gap-4">
+            <div className="flex-shrink-0">
+              <intel.icon className="w-10 h-10 text-purple-700 group-hover:scale-110 transition-transform" />
+            </div>
+            <div className="flex-1">
+              <h3 className="text-lg font-bold text-gray-900">{intel.name}</h3>
+              <p className="text-sm text-purple-600 font-medium mb-1">{intel.shortDesc}</p>
+              <p className="text-sm text-gray-600 mb-2">{intel.description}</p>
+              <p className="text-xs text-gray-400 italic">“{intel.prompt}”</p>
+            </div>
           </div>
         </div>
-      </section>
+      ))}
+    </div>
+  </div>
+</section>
 
       {/* Call to Action */}
       <section className="py-20 bg-gradient-to-r from-purple-800 to-indigo-800 text-white relative overflow-hidden">
