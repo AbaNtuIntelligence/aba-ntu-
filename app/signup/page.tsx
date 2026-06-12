@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
 import { getZodiacSign } from "@/lib/astrology";
+import { Upload, X } from "lucide-react";
+import Image from "next/image";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -20,6 +22,8 @@ export default function SignupPage() {
     birthLocation: "",
     primaryGoal: "",
     languagePatterns: "",
+    avatarFile: null as File | null,
+    avatarPreview: "",
   });
 
   const goals = [
@@ -31,9 +35,54 @@ export default function SignupPage() {
     "Transform my reality through language"
   ];
 
-  // This is the handleChange function - it IS defined here
+  // Handle all text/select inputs
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // Handle avatar file selection
+  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (!file.type.startsWith('image/')) {
+        setError("Please select an image file");
+        return;
+      }
+      if (file.size > 2 * 1024 * 1024) {
+        setError("Image must be less than 2MB");
+        return;
+      }
+      setFormData({
+        ...formData,
+        avatarFile: file,
+        avatarPreview: URL.createObjectURL(file),
+      });
+      setError("");
+    }
+  };
+
+  // Upload avatar to Supabase Storage and return public URL
+  const uploadAvatar = async (userId: string): Promise<string | null> => {
+    if (!formData.avatarFile) return null;
+    
+    const fileExt = formData.avatarFile.name.split('.').pop();
+    const fileName = `${userId}.${fileExt}`;
+    const filePath = fileName;
+    
+    const { error: uploadError } = await supabase.storage
+      .from('avatars')
+      .upload(filePath, formData.avatarFile, { upsert: true });
+    
+    if (uploadError) {
+      console.error("Avatar upload error:", uploadError);
+      return null;
+    }
+    
+    const { data: { publicUrl } } = supabase.storage
+      .from('avatars')
+      .getPublicUrl(filePath);
+    
+    return publicUrl;
   };
 
   const handleSignup = async () => {
@@ -46,6 +95,7 @@ export default function SignupPage() {
     setError("");
 
     try {
+      // 1. Create auth user
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
@@ -54,6 +104,7 @@ export default function SignupPage() {
       if (authError) throw authError;
 
       if (authData.user) {
+        // 2. Calculate zodiac sign
         let zodiacSign = null;
         let zodiacSymbol = null;
         
@@ -65,6 +116,13 @@ export default function SignupPage() {
           }
         }
 
+        // 3. Upload avatar
+        let avatarUrl = null;
+        if (formData.avatarFile) {
+          avatarUrl = await uploadAvatar(authData.user.id);
+        }
+
+        // 4. Create/update profile
         const { error: profileError } = await supabase
           .from("profiles")
           .upsert({
@@ -78,6 +136,7 @@ export default function SignupPage() {
             zodiac_symbol: zodiacSymbol,
             primary_goal: formData.primaryGoal || null,
             language_patterns: formData.languagePatterns || null,
+            avatar_url: avatarUrl,
             assessment_results: {},
             assessment_score: 0,
             archetype: "The Seeker",
@@ -87,13 +146,9 @@ export default function SignupPage() {
             onConflict: 'id'
           });
 
-        if (profileError) {
-          console.error("Profile error:", profileError);
-          setError("Failed to create profile: " + profileError.message);
-          setLoading(false);
-          return;
-        }
+        if (profileError) throw profileError;
 
+        // 5. Auto-login
         const { error: signInError } = await supabase.auth.signInWithPassword({
           email: formData.email,
           password: formData.password,
@@ -210,12 +265,54 @@ export default function SignupPage() {
               <label className="block text-sm font-medium text-gray-700 mb-1">Language Patterns</label>
               <textarea
                 name="languagePatterns"
-                placeholder="Example: I notice I say 'I cannot' often, or I want to understand word origins"
+                placeholder="Example: I notice I say 'I cannot' often..."
                 value={formData.languagePatterns}
                 onChange={handleChange}
                 rows={4}
                 className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-purple-500"
               />
+            </div>
+          </div>
+        );
+      
+      case 4:
+        return (
+          <div className="space-y-4">
+            <h2 className="text-2xl font-bold text-purple-900">Profile Photo</h2>
+            <p className="text-gray-600">Upload a photo to personalize your profile (optional)</p>
+            <div className="flex flex-col items-center gap-4">
+              {formData.avatarPreview ? (
+                <div className="relative">
+                  <Image
+                    src={formData.avatarPreview}
+                    alt="Avatar preview"
+                    width={120}
+                    height={120}
+                    className="rounded-full object-cover border-4 border-purple-200"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (formData.avatarPreview) URL.revokeObjectURL(formData.avatarPreview);
+                      setFormData({ ...formData, avatarFile: null, avatarPreview: "" });
+                    }}
+                    className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              ) : (
+                <label className="cursor-pointer flex flex-col items-center gap-2 p-6 border-2 border-dashed border-purple-300 rounded-xl hover:border-purple-500 transition w-full">
+                  <Upload className="w-8 h-8 text-purple-500" />
+                  <span className="text-sm text-gray-600">Click to upload (max 2MB)</span>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleAvatarChange}
+                    className="hidden"
+                  />
+                </label>
+              )}
             </div>
           </div>
         );
@@ -245,7 +342,7 @@ export default function SignupPage() {
               Back
             </button>
           )}
-          {step < 3 ? (
+          {step < 4 ? (
             <button
               onClick={() => setStep(step + 1)}
               className="flex-1 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"

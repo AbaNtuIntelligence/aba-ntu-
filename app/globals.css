@@ -12,6 +12,24 @@
   }
 }
 
+:root {
+  --navbar-height: 80px; /* fallback */
+}
+
+@media (min-width: 768px) {
+  :root {
+    --navbar-height: 90px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --navbar-height: 100px;
+  }
+}
+
+/* Optional: if navbar height changes, update these values */
+
 body {
   background: var(--background);
   color: var(--foreground);
@@ -21,4 +39,14 @@ body {
 @viewport {
   width: device-width;
   initial-scale: 1;
+}
+
+/* Grid pattern for hero sections */
+.bg-grid-pattern {
+  background-image: radial-gradient(circle at 1px 1px, #e2e8f0 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+.bg-grid-pattern-white {
+  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.1) 1px, transparent 1px);
+  background-size: 32px 32px;
 }

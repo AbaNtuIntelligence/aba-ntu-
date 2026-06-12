@@ -54,7 +54,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-purple-50">
-      <Sidebar 
+      <Sidebar
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
         user={user}
@@ -63,8 +63,9 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       />
       
       <div className="lg:ml-64">
-        <Navbar 
+        <Navbar
           onMenuClick={() => setSidebarOpen(true)}
+          onLogout={handleLogout}
           user={user}
           profile={profile}
         />
