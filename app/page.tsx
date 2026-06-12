@@ -41,6 +41,17 @@ export default function HomePage() {
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-purple-50 via-white to-indigo-50">
+        <Link href="/" className="flex items-center gap-2">
+  <img
+  src="/images/logo.png"
+  alt="AbaNtu Intelligence"
+  className="h-8 md:h-12 w-auto"
+/>
+  {/* Optional: keep text beside logo */}
+  <span className="font-bold text-xl bg-gradient-to-r from-gray-900 to-purple-800 bg-clip-text text-transparent">
+    AbaNtu
+  </span>
+</Link>
         <div className="absolute inset-0 bg-grid-pattern opacity-5" />
         <div className="relative max-w-7xl mx-auto px-6 py-24 md:py-32 text-center">
           <div className="inline-flex items-center gap-2 bg-white/70 backdrop-blur-sm rounded-full px-4 py-2 mb-6 border border-purple-200 shadow-sm">
