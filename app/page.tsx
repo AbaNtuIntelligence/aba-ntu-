@@ -45,7 +45,7 @@ export default function HomePage() {
   
   {/* Optional: keep text beside logo */}
   <span className="font-bold text-xl bg-gradient-to-r from-gray-900 to-purple-800 bg-clip-text text-transparent">
-    AbaNtu
+
   </span>
 </Link>
         <div className="absolute inset-0 bg-grid-pattern opacity-5" />
