@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import HomeButton from "@/app/components/ui/HomeButton";
 import { 
   Home, BarChart3, User, BookOpen, Star, LogOut, X, Gem 
 } from "lucide-react";
@@ -49,6 +50,7 @@ export default function Sidebar({ isOpen, onClose, user, profile, onLogout }: Si
               <Gem className="w-6 h-6 text-purple-600" />
               <span className="font-bold text-xl bg-gradient-to-r from-gray-900 to-purple-800 bg-clip-text text-transparent">
                 AbaNtu
+                <HomeButton />
               </span>
             </Link>
             <button

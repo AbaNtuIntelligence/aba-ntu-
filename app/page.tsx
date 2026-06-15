@@ -5,16 +5,15 @@ import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
 import Link from "next/link";
 import {
-  Brain, Sparkles, BookOpen, Target, Zap, Gem,
+  Brain, Sparkles, BookOpen, Target, Gem,
   ArrowRight, Award, Compass, Layers, Briefcase,
   Eye, Heart, TrendingUp, Feather, Users, Lightbulb, Crown,
   X, MessageSquare
 } from "lucide-react";
 
 export default function HomePage() {
-  const router = useRouter();
-  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
   const [showMethodModal, setShowMethodModal] = useState(false);
 
   useEffect(() => {
@@ -22,113 +21,116 @@ export default function HomePage() {
       const { data: { user } } = await supabase.auth.getUser();
       setUser(user);
       setLoading(false);
-      if (user) router.push("/dashboard");
     };
     checkUser();
-  }, [router]);
+  }, []);
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-indigo-50">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-4 border-purple-600 border-t-transparent" />
       </div>
     );
   }
 
-  if (user) return null;
-
   return (
     <div className="min-h-screen bg-white">
+      {/* Fixed Navbar */}
+      <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-gray-100 shadow-sm">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+          <Link href="/" className="flex items-center gap-2">
+            <Gem className="w-6 h-6 text-purple-600" />
+            <span className="font-bold text-xl bg-gradient-to-r from-gray-900 to-purple-800 bg-clip-text text-transparent">
+              AbaNtu
+            </span>
+          </Link>
+          <div className="hidden md:flex items-center gap-6">
+            <Link href="#lenses" className="text-gray-700 hover:text-purple-700 transition">The Three Lenses</Link>
+            <Link href="#paths" className="text-gray-700 hover:text-purple-700 transition">The Four Paths</Link>
+            <Link href="/about" className="text-gray-700 hover:text-purple-700 transition">About</Link>
+            {user ? (
+              <Link href="/dashboard" className="px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-lg hover:shadow-md transition">
+                Dashboard
+              </Link>
+            ) : (
+              <>
+                <Link href="/login" className="px-4 py-2 text-purple-700 border border-purple-300 rounded-lg hover:bg-purple-50 transition">
+                  Sign In
+                </Link>
+                <Link href="/signup" className="px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-lg hover:shadow-md transition">
+                  Get Started
+                </Link>
+              </>
+            )}
+          </div>
+          <button className="md:hidden p-2 rounded-lg hover:bg-white/20">
+            <span className="text-2xl text-gray-800">☰</span>
+          </button>
+        </div>
+      </nav>
+
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-purple-50 via-white to-indigo-50">
-        <Link href="/" className="flex items-center gap-2">
-  
-  {/* Optional: keep text beside logo */}
-  <span className="font-bold text-xl bg-gradient-to-r from-gray-900 to-purple-800 bg-clip-text text-transparent">
-
-  </span>
-</Link>
+      <section className="relative overflow-hidden bg-gradient-to-br from-purple-50 via-white to-indigo-50 pt-32 md:pt-40 pb-20">
         <div className="absolute inset-0 bg-grid-pattern opacity-5" />
-<div className="relative max-w-7xl mx-auto px-6 py-24 md:py-32 text-center">
-  {/* Centered Logo */}
-  <div className="flex justify-center mb-6">
-    <img
-      src="/images/logo.png"  // or .png
-      alt="AbaNtu Intelligence"
-      className="h-15 md:h-20 w-auto"
-    />
-  </div>
-
-  {/* Badge */}
-  <div className="inline-flex items-center gap-2 bg-white/70 backdrop-blur-sm rounded-full px-4 py-2 mb-6 border border-purple-200 shadow-sm">
-    <Sparkles className="w-4 h-4 text-purple-600" />
-    <span className="text-sm font-medium text-purple-800">AbaNtu Intelligence™</span>
-  </div>
-
-  {/* Headline */}
-  <h1 className="text-5xl md:text-7xl font-bold tracking-tight bg-gradient-to-r from-gray-900 via-purple-800 to-indigo-800 bg-clip-text text-transparent mb-6">
-    Know Thyself.<br />
-    Master Thyself.<br />
-    Align Thyself.<br />
-    Build Thyself.
-  </h1>
-
-  {/* Description */}
-  <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed">
-    The AbaNtu Method integrates Psychology, Astrology, and Etymology to help you discover your nature, master your behavior, align your life, and contribute your gifts.
-  </p>
-
-  {/* Buttons */}
-  <div className="flex flex-col sm:flex-row gap-4 justify-center">
-    <Link href="/signup" className="group px-8 py-4 bg-gradient-to-r from-purple-700 to-indigo-700 text-white rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] flex items-center justify-center gap-2">
-      Start Your Journey
-      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-    </Link>
-    <button
-      onClick={() => setShowMethodModal(true)}
-      className="px-8 py-4 bg-white border-2 border-purple-200 text-purple-800 rounded-2xl font-semibold hover:border-purple-400 transition-all flex items-center justify-center gap-2"
-    >
-      <MessageSquare className="w-5 h-5" />
-      Learn the Method
-    </button>
-  </div>
-</div>
+        <div className="relative max-w-7xl mx-auto px-6 text-center">
+          <div className="flex justify-center mb-6">
+            <img src="/images/logo.png" alt="AbaNtu Intelligence" className="h-90 md:h-94 w-auto" />
+          </div>
+          <div className="inline-flex items-center gap-2 bg-white/70 backdrop-blur-sm rounded-full px-4 py-2 mb-6 border border-purple-200 shadow-sm">
+            <Sparkles className="w-4 h-4 text-purple-600" />
+            <span className="text-sm font-medium text-purple-800">AbaNtu Intelligence™</span>
+          </div>
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tight bg-gradient-to-r from-gray-900 via-purple-800 to-indigo-800 bg-clip-text text-transparent mb-6">
+            Know Thyself.<br />
+            Master Thyself.<br />
+            Align Thyself.<br />
+            Build Thyself.
+          </h1>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed">
+            The AbaNtu Method integrates Psychology, Astrology, and Etymology to help you discover your nature, master your behavior, align your life, and contribute your gifts.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            {user ? (
+              <Link href="/dashboard" className="group px-8 py-4 bg-gradient-to-r from-purple-700 to-indigo-700 text-white rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] flex items-center justify-center gap-2">
+                Go to Dashboard
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            ) : (
+              <>
+                <Link href="/signup" className="group px-8 py-4 bg-gradient-to-r from-purple-700 to-indigo-700 text-white rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] flex items-center justify-center gap-2">
+                  Start Your Journey
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </Link>
+                <button
+                  onClick={() => setShowMethodModal(true)}
+                  className="px-8 py-4 bg-white border-2 border-purple-200 text-purple-800 rounded-2xl font-semibold hover:border-purple-400 transition-all flex items-center justify-center gap-2"
+                >
+                  <MessageSquare className="w-5 h-5" />
+                  Learn the Method
+                </button>
+              </>
+            )}
+          </div>
+        </div>
       </section>
 
-      {/* ... Rest of the sections (Three Lenses, Four Paths, etc.) remain the same as previously ... */}
-      {/* (I will include them for completeness but focus on modal) */}
-
-      {/* Method Modal */}
+      {/* Modal – The AbaNtu Method */}
       {showMethodModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-all">
           <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto shadow-2xl border border-purple-100">
             <div className="sticky top-0 bg-white border-b border-purple-100 px-6 py-4 flex justify-between items-center">
               <h2 className="text-2xl font-bold text-purple-900">The AbaNtu Method™</h2>
-              <button
-                onClick={() => setShowMethodModal(false)}
-                className="p-2 rounded-full hover:bg-purple-50 transition"
-              >
+              <button onClick={() => setShowMethodModal(false)} className="p-2 rounded-full hover:bg-purple-50 transition">
                 <X className="w-6 h-6 text-gray-500" />
               </button>
             </div>
             <div className="p-6 space-y-4 text-gray-700 leading-relaxed">
-              <p>
-                The AbaNtu Method™ is a structured self-mastery and human development framework that combines behavioral science, systems thinking, and digital intelligence to help individuals understand who they are, where they are, and what they need to do next.
-              </p>
-              <p>
-                Through our proprietary <strong className="text-purple-700">Self-Mastery Index™</strong>, participants assess key dimensions of personal effectiveness, leadership capacity, emotional resilience, discipline, purpose, and growth potential.
-              </p>
-              <p>
-                The assessment generates a personalized archetype and development profile, transforming self-awareness into actionable insight.
-              </p>
-              <p>
-                Rather than offering generic advice, the AbaNtu Method™ provides a data-driven roadmap for personal, professional, and community transformation—empowering individuals, teams, schools, organizations, and communities to move from potential to performance with clarity, accountability, and measurable progress.
-              </p>
+              <p>The AbaNtu Method™ is a structured self‑mastery and human development framework that combines behavioral science, systems thinking, and digital intelligence to help individuals understand who they are, where they are, and what they need to do next.</p>
+              <p>Through our proprietary <strong className="text-purple-700">Self‑Mastery Index™</strong>, participants assess key dimensions of personal effectiveness, leadership capacity, emotional resilience, discipline, purpose, and growth potential.</p>
+              <p>The assessment generates a personalized archetype and development profile, transforming self‑awareness into actionable insight.</p>
+              <p>Rather than offering generic advice, the AbaNtu Method™ provides a data‑driven roadmap for personal, professional, and community transformation – empowering individuals, teams, schools, organizations, and communities to move from potential to performance with clarity, accountability, and measurable progress.</p>
               <div className="mt-6 pt-4 border-t border-purple-100 text-center">
-                <Link
-                  href="/signup"
-                  className="inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl font-medium hover:shadow-md transition"
-                >
+                <Link href="/signup" className="inline-flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl font-medium hover:shadow-md transition">
                   Begin Your Journey
                   <ArrowRight className="w-4 h-4" />
                 </Link>
@@ -530,5 +532,9 @@ export default function HomePage() {
         </div>
       </footer>
     </div>
+
+
+
+
   );
 }
