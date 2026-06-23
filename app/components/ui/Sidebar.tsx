@@ -50,6 +50,7 @@ export default function Sidebar({ isOpen, onClose, user, profile, onLogout }: Si
               <span className="font-bold text-xl bg-gradient-to-r from-gray-900 to-purple-800 bg-clip-text text-transparent">
                 AbaNtu
               </span>
+              <span className="sm:hidden text-sm font-medium">Home</span>
             </Link>
             <button
               onClick={onClose}

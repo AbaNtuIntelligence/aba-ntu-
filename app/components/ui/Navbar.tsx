@@ -24,7 +24,7 @@ export default function Navbar({ onMenuClick, onLogout, user, profile }: NavbarP
 
         {/* Logo (desktop) */}
         <Link href="/" className="hidden lg:flex items-center gap-2">
-          <Gem className="w-6 h-6 text-purple-600" />
+          
           <span className="font-bold text-xl bg-gradient-to-r from-gray-900 to-purple-800 bg-clip-text text-transparent">
             AbaNtu
           </span>

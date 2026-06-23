@@ -106,6 +106,14 @@ export default function DashboardPage() {
     <DashboardLayout>
       {/* Hero Section with Archetype & Star Sign */}
       <div className="bg-gradient-to-br from-purple-900 via-indigo-900 to-purple-900 rounded-2xl p-6 md:p-8 mb-8 text-white shadow-xl">
+        <Link 
+              href="/dashboard"
+              className="flex items-center gap-2 px-3 py-2 rounded-lg bg-purple-800/50 hover:bg-purple-700 transition-all group"
+            >
+              <span className="text-xl group-hover:-translate-x-1 transition-transform">←</span>
+              <span className="hidden sm:inline text-sm font-medium">Back to Home</span>
+              <span className="sm:hidden text-sm font-medium">Home</span>
+            </Link>
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
             <div className="flex items-center gap-2 mb-2">

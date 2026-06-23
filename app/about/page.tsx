@@ -9,7 +9,25 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
+      
+          
       <div className="bg-gradient-to-r from-gray-900 via-purple-900 to-indigo-900 text-white">
+        <Link 
+              href="/dashboard"
+              className="flex items-center gap-2 px-3 py-2 rounded-lg bg-purple-800/50 hover:bg-purple-700 transition-all group"
+            >
+              <span className="text-xl group-hover:-translate-x-1 transition-transform">←</span>
+              <span className="hidden sm:inline text-sm font-medium">Back to Home</span>
+              <span className="sm:hidden text-sm font-medium">Home</span>
+            </Link>
+        <div className="flex w-full justify-center items-center py-4 mb-8">
+          
+  <img
+    src="/images/logo.png"
+    alt="AbaNtu Intelligence"
+    className="max-w-xs md:max-w-md lg:max-w-lg h-auto"
+  />
+</div>
         <div className="max-w-7xl mx-auto px-6 py-16 md:py-24 text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-4">The AbaNtu Method</h1>
           <p className="text-xl text-purple-200 max-w-3xl mx-auto">
@@ -182,4 +200,4 @@ export default function AboutPage() {
       </footer>
     </div>
   );
-}
+} 

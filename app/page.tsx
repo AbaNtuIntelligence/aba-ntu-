@@ -39,7 +39,7 @@ export default function HomePage() {
       <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-gray-100 shadow-sm">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <Link href="/" className="flex items-center gap-2">
-            <Gem className="w-6 h-6 text-purple-600" />
+          <img src="/images/logo.png" alt="AbaNtu Intelligence" className="h-12 md:h-16 w-auto" />
             <span className="font-bold text-xl bg-gradient-to-r from-gray-900 to-purple-800 bg-clip-text text-transparent">
               AbaNtu
             </span>
@@ -78,7 +78,7 @@ export default function HomePage() {
           </div>
           <div className="inline-flex items-center gap-2 bg-white/70 backdrop-blur-sm rounded-full px-4 py-2 mb-6 border border-purple-200 shadow-sm">
             <Sparkles className="w-4 h-4 text-purple-600" />
-            <span className="text-sm font-medium text-purple-800">AbaNtu Intelligence™</span>
+            <span className="text-sm font-medium text-purple-800"><strong className="text-purple-700">Self‑Mastery Index™</strong></span>
           </div>
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight bg-gradient-to-r from-gray-900 via-purple-800 to-indigo-800 bg-clip-text text-transparent mb-6">
             Know Thyself.<br />
