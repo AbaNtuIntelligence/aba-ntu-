@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
+import HomeButton from "./HomeButton";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -22,32 +23,52 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   }, []);
 
   const fetchUserAndProfile = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        router.push("/login");
+        return;
+      }
+      setUser(user);
+
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", user.id)
+        .single();
+
+      setProfile(profile);
+    } catch (error) {
+      console.error("Error fetching profile:", error);
       router.push("/login");
-      return;
+    } finally {
+      setLoading(false);
     }
-    setUser(user);
-    
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("*")
-      .eq("id", user.id)
-      .single();
-    
-    setProfile(profile);
-    setLoading(false);
   };
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
-    router.push("/login");
+    try {
+      // Clear local storage
+      localStorage.removeItem('supabase.auth.token');
+      sessionStorage.removeItem('supabase.auth.token');
+      
+      // Sign out from Supabase
+      await supabase.auth.signOut();
+      
+      // Force redirect to login
+      window.location.href = "/login";
+      
+    } catch (err) {
+      console.error("Logout error:", err);
+      // Force redirect even if logout fails
+      window.location.href = "/login";
+    }
   };
 
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-indigo-50">
-        <div className="animate-spin rounded-full h-12 w-12 border-4 border-purple-600 border-t-transparent"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-4 border-purple-600 border-t-transparent" />
       </div>
     );
   }
@@ -61,7 +82,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         profile={profile}
         onLogout={handleLogout}
       />
-      
+
       <div className="lg:ml-64">
         <Navbar
           onMenuClick={() => setSidebarOpen(true)}
@@ -73,6 +94,8 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           {children}
         </main>
       </div>
+
+      <HomeButton />
     </div>
   );
 }
