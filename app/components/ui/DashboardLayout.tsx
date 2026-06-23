@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
-import HomeButton from "./HomeButton";
+
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -48,20 +48,35 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
   const handleLogout = async () => {
     try {
-      // Clear local storage
-      localStorage.removeItem('supabase.auth.token');
-      sessionStorage.removeItem('supabase.auth.token');
+      console.log("Logging out...");
       
-      // Sign out from Supabase
-      await supabase.auth.signOut();
+      // Attempt to sign out from Supabase
+      const { error } = await supabase.auth.signOut();
+      
+      if (error) {
+        console.error("Supabase signOut error:", error);
+      }
+      
+      // Clear all local storage data
+      localStorage.clear();
+      sessionStorage.clear();
+      
+      // Clear any cookies if needed (Supabase uses cookies)
+      document.cookie.split(";").forEach(function(c) {
+        document.cookie = c
+          .replace(/^ +/, "")
+          .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+      });
       
       // Force redirect to login
-      window.location.href = "/login";
+      router.push("/login");
+      router.refresh();
       
     } catch (err) {
       console.error("Logout error:", err);
-      // Force redirect even if logout fails
-      window.location.href = "/login";
+      // Force redirect even if everything fails
+      router.push("/login");
+      router.refresh();
     }
   };
 
@@ -75,6 +90,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-purple-50">
+      
       <Sidebar
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
@@ -95,7 +111,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         </main>
       </div>
 
-      <HomeButton />
+      
     </div>
   );
 }
